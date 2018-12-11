@@ -10,6 +10,7 @@ module.exports = function(server) {
 	 * CREATE
 	 */
 	server.post('/assignments/create', (req, res, next) => {
+    console.log(req.body);
     let shasum  = crypto.createHash('sha1');
     shasum.update(req.body.name + Date.now());
     let id  = shasum.digest('hex');
