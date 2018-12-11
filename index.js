@@ -14,19 +14,5 @@ server.use(restifyPlugins.fullResponse());
 server.use(restifyPlugins.bodyParser());
 
 server.listen(config.port, () => {
-	// // establish connection to mongodb
-	// mongoose.Promise = global.Promise;
-	// mongoose.connect(config.db.uri, { useMongoClient: true });
-  //
-	// const db = mongoose.connection;
-  //
-	// db.on('error', (err) => {
-	//     console.error(err);
-	//     process.exit(1);
-	// });
-  //
-	// db.once('open', () => {
-	    require('./routes')(server);
-	    console.log(`Server is listening on port ${config.port}`);
-	// });
+  require('./routes')(server);
 });
