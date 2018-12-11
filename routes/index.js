@@ -5,10 +5,13 @@ const config = require('../config');
 const db = config.db;
 
 module.exports = function(server) {
-
   /**
-	 * CREATE
-	 */
+    * @api {post} /assignments/create Create a new Assignment
+    * @apiName Post
+    * @apiGroup Assignment
+    *
+    * @apiSuccess {String} assignment The assignment id.
+  */
 	server.post('/assignments/create', (req, res, next) => {
     console.log(req.body);
     let shasum  = crypto.createHash('sha1');
@@ -32,6 +35,7 @@ module.exports = function(server) {
     }
 
     res.send(id);
+    next();
 	});
 
   /**
@@ -70,8 +74,14 @@ module.exports = function(server) {
 
 
   /**
-   *  SEARCH
-   */
+    * @api {get} /assignments/search/:id Search assignments
+    * @apiName Get
+    * @apiGroup Search
+    *
+    * @apiParam {String} id Assignment UUID.
+    *
+    * @apiSuccess {Object} assignment The assignment object.
+  */
 
    server.get('/assignments/search/:tag', (req, res, next) => {
       db.ref('tags/' + req.params.tag).once("value").then(function(snapshot) {
@@ -83,64 +93,12 @@ module.exports = function(server) {
    });
 
 	/**
-	 * UPDATE
+	 * UPDATE : not implemented
 	 */
-	/*server.put('/todos/:todo_id', (req, res, next) => {
-		if (!req.is('application/json')) {
-			return next(
-				new errors.InvalidContentError("Expects 'application/json'"),
-			);
-		}
 
-		let data = req.body || {};
-
-		if (!data._id) {
-			data = Object.assign({}, data, { _id: req.params.todo_id });
-		}
-
-		Todo.findOne({ _id: req.params.todo_id }, function(err, doc) {
-			if (err) {
-				console.error(err);
-				return next(
-					new errors.InvalidContentError(err.errors.name.message),
-				);
-			} else if (!doc) {
-				return next(
-					new errors.ResourceNotFoundError(
-						'The resource you requested could not be found.',
-					),
-				);
-			}
-
-			Todo.update({ _id: data._id }, data, function(err) {
-				if (err) {
-					console.error(err);
-					return next(
-						new errors.InvalidContentError(err.errors.name.message),
-					);
-				}
-
-				res.send(200, data);
-				next();
-			});
-		});
-	});*/
 
 	/**
-	 * DELETE
+	 * DELETE : not implemented
 	 */
-	/*server.del('/todos/:todo_id', (req, res, next) => {
-		Todo.remove({ _id: req.params.todo_id }, function(err) {
-			if (err) {
-				console.error(err);
-				return next(
-					new errors.InvalidContentError(err.errors.name.message),
-				);
-			}
 
-			res.send(204);
-			next();
-		});
-	});
-  */
 };
