@@ -33,9 +33,13 @@ module.exports = function(server) {
     res.send(id);
 	});
 
-	/**
-	 * LIST
-	 */
+  /**
+    * @api {get} /assignments/ Request All Assignment information
+    * @apiName Get
+    * @apiGroup Assignment
+    *
+    * @apiSuccess {Object} assignment All assignments.
+  */
 	server.get('/assignments', (req, res, next) => {
     db.ref('assignments').once("value").then(function(snapshot) {
       res.send(snapshot.val());
@@ -52,7 +56,7 @@ module.exports = function(server) {
     *
     * @apiParam {String} id Assignment UUID.
     *
-    * @apiSuccess {Objectt} assignment The assignment object.
+    * @apiSuccess {Object} assignment The assignment object.
   */
 	server.get('/assignments/:id', (req, res, next) => {
     db.ref('assignments/' + req.params.id).once("value").then(function(snapshot) {
