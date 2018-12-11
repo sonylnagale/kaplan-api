@@ -73,7 +73,7 @@ module.exports = function(server) {
    *  SEARCH
    */
 
-   server.get('/search/:tag', (req, res, next) => {
+   server.get('/assignments/search/:tag', (req, res, next) => {
       db.ref('tags/' + req.params.tag).once("value").then(function(snapshot) {
         res.send(snapshot.val());
         next();
