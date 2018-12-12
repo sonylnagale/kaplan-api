@@ -1,0 +1,1 @@
+define({  "name": "assignments-api",  "version": "0.0.0",  "description": "Kaplan Coding Assessment",  "title": "Managing Assignments",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2018-12-12T13:13:13.988Z",    "url": "http://apidocjs.com",    "version": "0.17.7"  }});
