@@ -15,7 +15,7 @@ module.exports = {
 	name: 'assignments-api',
   version: '0.0.0',
 	env: process.env.NODE_ENV || 'development',
-	port: process.env.PORT || 3001,
-	base_url: process.env.BASE_URL || 'http://localhost:3001',
+	port: process.env.PORT || 8081,
+	base_url: process.env.BASE_URL || 'http://localhost:8081',
 	db: db,
 };

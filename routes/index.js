@@ -5,6 +5,11 @@ const config = require('../config');
 const db = config.db;
 
 module.exports = function(server) {
+  server.get('/', (req, res, next) => {
+    res.send('Hello world');
+  });
+
+
   /**
     * @api {post} /assignment/create Create a new Assignment
     * @apiName Post
