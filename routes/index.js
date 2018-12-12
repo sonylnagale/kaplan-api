@@ -13,7 +13,6 @@ module.exports = function(server) {
     * @apiSuccess {String} assignment The assignment id.
   */
 	server.post('/assignment/create', (req, res, next) => {
-    console.log(req.body);
     let shasum  = crypto.createHash('sha1');
     shasum.update(req.body.name + Date.now());
     let id  = shasum.digest('hex');
