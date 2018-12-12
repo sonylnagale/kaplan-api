@@ -6,13 +6,13 @@ const db = config.db;
 
 module.exports = function(server) {
   /**
-    * @api {post} /assignments/create Create a new Assignment
+    * @api {post} /assignment/create Create a new Assignment
     * @apiName Post
     * @apiGroup Assignment
     *
     * @apiSuccess {String} assignment The assignment id.
   */
-	server.post('/assignments/create', (req, res, next) => {
+	server.post('/assignment/create', (req, res, next) => {
     console.log(req.body);
     let shasum  = crypto.createHash('sha1');
     shasum.update(req.body.name + Date.now());
@@ -39,13 +39,13 @@ module.exports = function(server) {
 	});
 
   /**
-    * @api {get} /assignments/ Request All Assignment information
+    * @api {get} /assignment/ Request All Assignment information
     * @apiName Get
     * @apiGroup Assignment
     *
     * @apiSuccess {Object} assignment All assignments.
   */
-	server.get('/assignments', (req, res, next) => {
+	server.get('/assignment', (req, res, next) => {
     db.ref('assignments').once("value").then(function(snapshot) {
       res.send(snapshot.val());
       next();
@@ -55,7 +55,7 @@ module.exports = function(server) {
 	});
 
   /**
-    * @api {get} /assignments/:id Request Assignment information
+    * @api {get} /assignment/:id Request Assignment information
     * @apiName Get
     * @apiGroup Assignment
     *
@@ -63,7 +63,7 @@ module.exports = function(server) {
     *
     * @apiSuccess {Object} assignment The assignment object.
   */
-	server.get('/assignments/:id', (req, res, next) => {
+	server.get('/assignment/:id', (req, res, next) => {
     db.ref('assignments/' + req.params.id).once("value").then(function(snapshot) {
       res.send(snapshot.val());
       next();
@@ -74,7 +74,7 @@ module.exports = function(server) {
 
 
   /**
-    * @api {get} /assignments/search/:id Search assignments
+    * @api {get} /assignment/search/:id Search assignments
     * @apiName Get
     * @apiGroup Search
     *
@@ -83,7 +83,7 @@ module.exports = function(server) {
     * @apiSuccess {Object} assignment The assignment object.
   */
 
-   server.get('/assignments/search/:tag', (req, res, next) => {
+   server.get('/assignment/search/:tag', (req, res, next) => {
       db.ref('tags/' + req.params.tag).once("value").then(function(snapshot) {
         res.send(snapshot.val());
         next();
