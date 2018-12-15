@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log(req.body);
+  console.log('this is post', req.body);
   request.post({
     url: config.api_url  + 'create',
     form: req.body,

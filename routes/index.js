@@ -24,9 +24,9 @@ module.exports = function(server) {
   */
 	server.post('/assignment/create', restify.plugins.conditionalHandler([
     { version: '1.0.0', handler: (req, res, next) => {
-      let shasum  = crypto.createHash('sha1');
+      let shasum = crypto.createHash('sha1');
       shasum.update(req.body.name + Date.now());
-      let id  = shasum.digest('hex');
+      let id = shasum.digest('hex');
       const tags = req.body.tags;
       const assignment = {
         id: id,
@@ -49,29 +49,34 @@ module.exports = function(server) {
   	 }
     },
     { version: '2.0.0', handler: (req, res, next) => {
-      let shasum  = crypto.createHash('sha1');
+      let shasum = crypto.createHash('sha1');
       shasum.update(req.body.name + Date.now());
       let id  = shasum.digest('hex');
       const tags = req.body.tags;
-      console.log(tags);
+      let tagsRefs = [];
+
+      if (tags.length > 0 && tags[0] != '') {
+        tags.forEach(function(tag) {
+          const href = config.base_url + `/assignment/search/${tag}`
+          db.ref('v2/tags').child(tag).push({
+            id: tag,
+            assignment: id,
+            href: href,
+          });
+          tagsRefs.push(href);
+        });
+      }
+
       const assignment = {
         id: id,
         name: req.body.name,
         title: req.body.title,
         tags: tags,
+        tagRefs: tagsRefs,
         description: req.body.description,
       };
 
       db.ref('v2/assignments').child(id).set(assignment);
-
-      if (tags.length > 0 && tags[0] != '') {
-        tags.forEach(function(tag) {
-          db.ref('v2/tags').child(tag).push({
-            id: tag,
-            assignment: id,
-          });
-        });
-      }
 
       res.send(id);
       next();
@@ -160,7 +165,7 @@ module.exports = function(server) {
         }, function (error) {
           console.error(error);
         });
-     }}]));
+     }}]))
 
 
 	/**
