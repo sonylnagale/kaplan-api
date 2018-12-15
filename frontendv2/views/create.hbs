@@ -1,0 +1,45 @@
+<h1>Create an Assignment</h1>
+
+<div id="create-form"  class="{{class}}">
+
+  <form id="create" method="POST" action="/create">
+    <!--  @todo proper box model instead of table -->
+    <table>
+      <tr>
+        <td><label for="name">Name:</label></td>
+        <td><input type="text" name="name" /></td>
+      </tr>
+      <tr>
+        <td><label for="title">Title:</label></td>
+        <td><input type="text" name="title" /></td>
+      </tr>
+      <tr>
+        <td><label for="tags">Tags:</label></td>
+        <td>
+          <div class="container">
+          	<div class="row">
+          		<input type="hidden" name="count" value="1" />
+                  <div class="control-group" id="fields">
+                      <div class="controls" id="profs">
+                          <form class="input-append">
+                              <div id="field"><input autocomplete="off" class="input" id="field1" name="tags[]" type="text" placeholder="Type something" data-items="8"/><button id="b1" class="btn add-more" type="button">+</button></div>
+                          </form>
+                      </div>
+                  </div>
+          	</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="description">Description:</label></td>
+        <td><textarea type="text" name="description"></textarea></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" />
+      </tr>
+    </table>
+  </form>
+</div>
+
+<script src="javascripts/create.js"></script>

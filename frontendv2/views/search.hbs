@@ -1,0 +1,16 @@
+<h1>Search by Tag</h1>
+
+<form id="search" method="POST" action="/search">
+  <p><input type="text" name="search" /><input type="submit" /></p>
+</form>
+
+{{#if tag}}
+  {{#if data}}
+    <h2>Results for {{tag}}:</h2>
+    {{#each data}}
+      <p><a href="/assignments/{{this.assignment}}">{{this.assignment}}</a></p>
+    {{/each}}
+  {{else}}
+    <h2>No Results for {{tag}}.</h2>
+  {{/if}}
+{{/if}}

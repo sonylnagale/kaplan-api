@@ -13,7 +13,7 @@ const db = firebase.initializeApp(config).database();
 
 module.exports = {
 	name: 'assignments-api',
-  version: '0.0.0',
+  version: '2.0.0',
 	env: process.env.NODE_ENV || 'development',
 	port: process.env.PORT || 8081,
 	base_url: process.env.BASE_URL || 'http://localhost:8081',

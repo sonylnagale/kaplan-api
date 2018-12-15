@@ -68,3 +68,16 @@ You can submit the code in a GithHub repo and send us a link.
 1. Run the Docker image: `docker run -p 49160:8081 -p 49161:3000 -d sonylnagale/kaplan-api`.
 1. Access the front-end at: `http://localhost:49161`.
 1. API documentation is at: `http://localhost:49161/docs/`
+
+
+## Todo
+
+1. x Versioning
+1. Link tags to Assignments
+1. Implement PUT, PATCH, DELETE
+1. Data-oriented URLs
+1. Add self link
+1. Better error handling
+1. Flesh out assignment fields
+1. Front-end validation of assignment fields
+1. Update apidocs

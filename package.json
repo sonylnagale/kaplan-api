@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "apidoc -i . -o docs/ --private false -e node_modules",
-    "start": "concurrently --kill-others \"nodemon index.js\" \"cd frontend; npm start\""
+    "start": "concurrently --kill-others \"nodemon index.js\" \"cd frontendv2; npm start\""
   },
   "author": "",
   "license": "ISC",
