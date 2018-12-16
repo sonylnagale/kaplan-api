@@ -74,7 +74,7 @@ You can submit the code in a GithHub repo and send us a link.
 
 1. x Versioning
 1. X Link tags to Assignments
-1. Implement PUT, PATCH, DELETE
+1. Implement PUT, PATCH, X DELETE
 1. Data-oriented URLs
 1. Add self link
 1. Better error handling

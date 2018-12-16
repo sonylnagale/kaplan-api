@@ -5,12 +5,17 @@ const config = require('../config');
 
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.render('create', { title: 'Express' });
+router.get('/:id?', function(req, res, next) {
+  request({url: config.api_url + req.params.id, json: true}, function(err, response, json) {
+    if (err) {
+      throw err;
+    }
+
+    res.render('create', { id: req.params.id, assignment: json});
+  });
 });
 
 router.post('/', function(req, res, next) {
-  console.log('this is post', req.body);
   request.post({
     url: config.api_url  + 'create',
     form: req.body,

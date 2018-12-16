@@ -53,30 +53,29 @@ module.exports = function(server) {
       shasum.update(req.body.name + Date.now());
       let id  = shasum.digest('hex');
       const tags = req.body.tags;
-      let tagsRefs = [];
-
-      if (tags.length > 0 && tags[0] != '') {
-        tags.forEach(function(tag) {
-          const href = config.base_url + `/assignment/search/${tag}`
-          db.ref('v2/tags').child(tag).push({
-            id: tag,
-            assignment: id,
-            href: href,
-          });
-          tagsRefs.push(href);
-        });
-      }
 
       const assignment = {
         id: id,
         name: req.body.name,
         title: req.body.title,
-        tags: tags,
-        tagRefs: tagsRefs,
         description: req.body.description,
+        tags: [],
       };
 
-      db.ref('v2/assignments').child(id).set(assignment);
+      if (tags.length > 0 && tags[0] != '') {
+        tags.forEach(function(tag) {
+          const href = config.base_url + `/assignment/search/${tag}`;
+          db.ref('v2/tags').child(tag).push({
+            id: tag,
+            assignment: id,
+            href: href,
+          })
+          .then((ref) => {
+            assignment.tags.push({tag: tag, ref: ref.key, href: href});
+            db.ref('v2/assignments').child(id).set(assignment);
+          });
+        });
+      }
 
       res.send(id);
       next();
@@ -174,7 +173,28 @@ module.exports = function(server) {
 
 
 	/**
-	 * DELETE : not implemented
+	 * DELETE
 	 */
+   server.del('/assignment/delete', restify.plugins.conditionalHandler([
+     { version: '2.0.0', handler: (req, res, next) => {
+       db.ref('v2/assignments/' + req.body.id).once("value").then(function(snapshot) {
+         const tags = snapshot.val().tags;
+
+         tags.forEach((tag) => {
+           console.log(tag);
+           db.ref('v2/tags').child(tag.tag).child(tag.ref).remove();
+         });
+         db.ref('v2/assignments').child(req.body.id).remove().then(function(snapshot) {
+           res.send(200);
+           next();
+         }, function (error) {
+           console.error(error);
+         });
+       }, function (error) {
+         console.error(error);
+       });
+
+
+   }}]));
 
 };

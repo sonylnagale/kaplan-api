@@ -1,8 +1,27 @@
-<p>ID: {{id}}</p>
-<p>Name: {{assignment.name}}</p>
-<p>Title: {{assignment.title}}</p>
-<p>Tags: {{#each assignment.tags}}
-  <a href=" /search/{{this}}"> {{this}}</a>
-  {{/each}}
-</p>
-<p>Description: {{assignment.description}}</p>
+<form id="read" method="POST">
+  <p>ID: {{id}}</p>
+  <p>Name: <input name="name"  value="{{assignment.name}}" /></p>
+  <p>Title: <input name="title" value="{{assignment.title}}" /></p>
+  <p id="tags">Tags:
+    {{#each assignment.tags}}
+      <input autocomplete="off" class="input" id="field{{@key}}" name="tags[]" type="text" value="{{this.tag}}" /><button id="remove{{@key}}" class="btn btn-danger remove-me-existing">-</button>
+    {{/each}}
+
+    <div class="row">
+      <input type="hidden" name="count" value="1" />
+          <div class="control-group" id="fields">
+              <div class="controls" id="profs">
+                  <div class="input-append">
+                      <div id="field"><input autocomplete="off" class="input" id="field1" name="tags[]" type="text" placeholder="Type something" /><button id="b1" class="btn add-more" type="button">+</button></div>
+                  </div>
+              </div>
+          </div>
+    </div>
+  </p>
+  <p>Description: <textarea type="text" name="description">{{assignment.description}}</textarea></p>
+  <input type="hidden" name="id" value="{{id}}" />
+  <p><button id="update" type="button">Update</button> <button id="delete" type="button">Delete</button>
+</form>
+
+
+<script src="/javascripts/create.js"></script>

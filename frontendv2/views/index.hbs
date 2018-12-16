@@ -3,7 +3,11 @@
   <p><a href="/assignments/{{@key}}">{{@key}}</a></p>
   <p>Name: {{name}}</p>
   <p>Title: {{title}}</p>
-  <p>Tags: {{tags}}</p>
+  <p>Tags:
+    {{#each tags}}
+    <a href="/search/{{this.tag}}">{{this.tag}}</a> &nbsp; &nbsp;
+    {{/each}}
+  </p>
   <p>Description: {{description}}</p>
 </div>
 {{/each}}

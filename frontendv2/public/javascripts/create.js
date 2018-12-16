@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  let next = 1;
+  let next = 0;
   $(".add-more").click(function(e){
     e.preventDefault();
     let addto = "#field" + next;
@@ -19,6 +19,38 @@ $(document).ready(function(){
         let fieldID = "#field" + fieldNum;
         $(this).remove();
         $(fieldID).remove();
+    });
+  });
+
+  $('#tags .remove-me-existing').click(function(e){
+    e.preventDefault();
+      let fieldNum = e.target.id.charAt(e.target.id.length-1);
+      let fieldID = "#field" + fieldNum;
+      $(e.target).remove();
+      $(fieldID).remove();
+  });
+
+  $('#delete').click(function(e) {
+    const form =  $('#read')
+    $.ajax({
+      url: '/edit',
+      type: 'DELETE',
+      data: form.serialize(),
+      success: function() {
+        window.location = "/";
+      }
+    });
+  });
+
+  $('#update').click(function(e) {
+    const form =  $('#read')
+    $.ajax({
+      url: '/edit',
+      type: 'PUT',
+      data: form.serialize(),
+      success: function() {
+        window.location = "/";
+      }
     });
   });
 });
