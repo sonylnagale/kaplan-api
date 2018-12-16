@@ -43,7 +43,7 @@ $(document).ready(function(){
   });
 
   $('#update').click(function(e) {
-    const form =  $('#read')
+    const form = $('#read')
     $.ajax({
       url: '/edit',
       type: 'PUT',

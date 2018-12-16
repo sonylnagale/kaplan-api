@@ -170,7 +170,59 @@ module.exports = function(server) {
 	/**
 	 * UPDATE : not implemented
 	 */
+   server.put('/assignment/update', restify.plugins.conditionalHandler([
+     { version: '2.0.0', handler: (req, res, next) => {
 
+       db.ref('v2/assignments').child(req.body.id).once("value").then(function(snapshot) {
+         const tags = snapshot.val().tags;
+
+         if (tags) {
+           tags.forEach((tag) => {
+             db.ref('v2/tags').child(tag.tag).child(tag.ref).remove();
+           });
+           db.ref('v2/assignments').child(req.body.id).remove().then(function(snapshot) {
+             // res.send(200);
+             next();
+           }, function (error) {
+             console.error(error);
+           })
+         }
+
+
+
+       const newTags = req.body.tags;
+
+       const assignment = {
+         id: req.body.id,
+         name: req.body.name,
+         title: req.body.title,
+         description: req.body.description,
+         tags: [],
+       };
+
+       if (newTags.length > 0 && newTags[0] != '') {
+         newTags.forEach(function(tag) {
+           if (tag !== '') {
+             const href = config.base_url + `/assignment/search/${tag}`;
+             db.ref('v2/tags').child(tag).push({
+               id: tag,
+               assignment: req.body.id,
+               href: href,
+             })
+             .then((ref) => {
+               assignment.tags.push({tag: tag, ref: ref.key, href: href});
+             });
+           }
+
+           db.ref('v2/assignments').child(req.body.id).set(assignment);
+
+         });
+       }
+
+       res.send(200);
+       next();
+     })
+   }}]));
 
 	/**
 	 * DELETE
@@ -181,7 +233,6 @@ module.exports = function(server) {
          const tags = snapshot.val().tags;
 
          tags.forEach((tag) => {
-           console.log(tag);
            db.ref('v2/tags').child(tag.tag).child(tag.ref).remove();
          });
          db.ref('v2/assignments').child(req.body.id).remove().then(function(snapshot) {
@@ -193,8 +244,6 @@ module.exports = function(server) {
        }, function (error) {
          console.error(error);
        });
-
-
    }}]));
 
 };
